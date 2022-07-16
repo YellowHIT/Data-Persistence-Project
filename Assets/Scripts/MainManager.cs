@@ -12,10 +12,10 @@ public class MainManager : MonoBehaviour
 
     public Text ScoreText;
     public GameObject GameOverText;
+    public GameObject HighScoreText;
     
     private bool m_Started = false;
-    private int m_Points;
-    
+    public int m_Points;
     private bool m_GameOver = false;
 
     
@@ -66,12 +66,23 @@ public class MainManager : MonoBehaviour
     void AddPoint(int point)
     {
         m_Points += point;
-        ScoreText.text = $"Score : {m_Points}";
+        ScoreText.text = $"{SaveManager.Instance.name} Score : {m_Points}";
     }
 
     public void GameOver()
     {
+        Debug.Log("fui chamado");
         m_GameOver = true;
         GameOverText.SetActive(true);
+        HighScoreText.SetActive(true);
+        GameObject.Find("SaveManager").GetComponent<SaveManager>().SaveName(m_Points);
+        GameObject.Find("SaveManager").GetComponent<SaveManager>().LoadName();
+        
+        GameObject.Find("HighScoreText").GetComponent<Text>().text = 
+            $"Best Score {GameObject.Find("SaveManager").GetComponent<SaveManager>().GetName()} : {GameObject.Find("SaveManager").GetComponent<SaveManager>().GetScore()}";
+
+        Debug.Log(GameObject.Find("SaveManager").GetComponent<SaveManager>().GetName());    
     }
+
+
 }

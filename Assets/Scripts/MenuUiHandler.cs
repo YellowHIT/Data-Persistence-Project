@@ -18,7 +18,9 @@ public class MenuUiHandler : MonoBehaviour
 
     public void StartNew()
     {
+        
         SceneManager.LoadScene(1);
+        SaveManager.Instance.SaveName(-1);
     }
     
      public void BackToMenu()
